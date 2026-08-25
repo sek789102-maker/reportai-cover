@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+<title>ReportAI Cover — สร้างปกรายงานด้วย AI</title>
+<meta name="description" content="กรอกข้อมูลรายงาน แล้วให้ AI ช่วยออกแบบปกให้คุณ ดาวน์โหลดเป็น PNG หรือ PDF ได้ทันที" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&family=Noto+Serif+Thai:wght@400;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">R</span>
+        <div class="logo-text">
+          <span class="logo-title">ReportAI</span>
+          <span class="logo-subtitle">AI Cover Designer</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- ===================== VIEW: FORM ===================== -->
+    <section id="view-form" class="view view-form">
+
+      <div class="hero">
+        <h1 class="hero-title">สร้างปกรายงานสวย ๆ<br />ด้วย <span class="accent-text">AI</span></h1>
+        <p class="hero-subtitle">กรอกข้อมูลรายงาน แล้วให้ AI ช่วยออกแบบปกให้คุณ</p>
+      </div>
+
+      <div id="demo-banner" class="demo-banner hidden" role="status">
+        <span class="demo-banner-icon">ℹ️</span>
+        <span>AI ยังไม่ได้เชื่อมต่อ — กำลังใช้ดีไซน์อัตโนมัติ</span>
+      </div>
+
+      <form id="report-form" class="card form-card" novalidate>
+        <h2 class="section-title">ข้อมูลรายงาน</h2>
+
+        <div class="field">
+          <label for="f-title">ชื่อรายงาน <span class="req">*</span></label>
+          <input id="f-title" name="title" type="text" maxlength="120" placeholder="เช่น โครงงานพลังงานแสงอาทิตย์" autocomplete="off" />
+          <span class="field-error" data-error-for="title"></span>
+        </div>
+
+        <div class="field">
+          <label for="f-subject">วิชา <span class="req">*</span></label>
+          <input id="f-subject" name="subject" type="text" maxlength="80" placeholder="เช่น วิทยาศาสตร์" autocomplete="off" />
+          <span class="field-error" data-error-for="subject"></span>
+        </div>
+
+        <div class="field">
+          <label for="f-author">ชื่อผู้จัดทำ <span class="req">*</span></label>
+          <input id="f-author" name="author" type="text" maxlength="120" placeholder="เช่น ด.ช. สมชาย ใจดี" autocomplete="off" />
+          <span class="field-error" data-error-for="author"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="f-grade">ชั้น <span class="req">*</span></label>
+            <input id="f-grade" name="grade" type="text" maxlength="20" placeholder="เช่น ม.6" autocomplete="off" />
+            <span class="field-error" data-error-for="grade"></span>
+          </div>
+          <div class="field">
+            <label for="f-room">ห้อง <span class="req">*</span></label>
+            <input id="f-room" name="room" type="text" maxlength="20" placeholder="เช่น 1" autocomplete="off" />
+            <span class="field-error" data-error-for="room"></span>
+          </div>
+          <div class="field">
+            <label for="f-number">เลขที่ <span class="req">*</span></label>
+            <input id="f-number" name="number" type="text" maxlength="20" placeholder="เช่น 15" autocomplete="off" />
+            <span class="field-error" data-error-for="number"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-school">โรงเรียน <span class="req">*</span></label>
+          <input id="f-school" name="school" type="text" maxlength="150" placeholder="เช่น โรงเรียนตัวอย่างวิทยา" autocomplete="off" />
+          <span class="field-error" data-error-for="school"></span>
+        </div>
+
+        <div class="field">
+          <label for="f-teacher">ครูผู้สอน <span class="req">*</span></label>
+          <input id="f-teacher" name="teacher" type="text" maxlength="120" placeholder="เช่น อาจารย์สมหญิง รักเรียน" autocomplete="off" />
+          <span class="field-error" data-error-for="teacher"></span>
+        </div>
+
+        <div class="field">
+          <label for="f-description">คำอธิบายรายงาน <span class="req">*</span></label>
+          <textarea id="f-description" name="description" maxlength="400" rows="3" placeholder="อธิบายเนื้อหารายงานสั้น ๆ เพื่อให้ AI เข้าใจและออกแบบได้ตรงจุด"></textarea>
+          <span class="field-error" data-error-for="description"></span>
+        </div>
+
+        <h2 class="section-title">เลือกสไตล์ปก</h2>
+        <div id="style-selector" class="style-grid" role="radiogroup" aria-label="เลือกสไตล์ปก">
+          <!-- style cards injected by app.js -->
+        </div>
+        <span class="field-error" data-error-for="style"></span>
+
+        <button type="submit" id="submit-btn" class="btn btn-primary btn-block">
+          <span class="btn-label">✨ ให้ AI ออกแบบ</span>
+        </button>
+      </form>
+
+    </section>
+
+    <!-- ===================== LOADING OVERLAY ===================== -->
+    <div id="loading-overlay" class="loading-overlay hidden" role="status" aria-live="polite">
+      <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="loading-message" class="loading-message">AI กำลังวิเคราะห์รายงาน...</p>
+      </div>
+    </div>
+
+    <!-- ===================== VIEW: EDITOR ===================== -->
+    <section id="view-editor" class="view view-editor hidden">
+
+      <div class="editor-layout">
+
+        <div class="canvas-panel">
+          <div class="canvas-wrap">
+            <canvas id="cover-canvas" width="1240" height="1754" aria-label="ตัวอย่างปกรายงาน"></canvas>
+          </div>
+          <p id="success-message" class="success-message hidden">สร้างปกสำเร็จแล้ว 🎉</p>
+        </div>
+
+        <div class="controls-panel">
+
+          <div class="card controls-card">
+            <h2 class="section-title">แก้ไขข้อมูล</h2>
+
+            <div class="field field-compact">
+              <label for="e-title">ชื่อรายงาน</label>
+              <input id="e-title" type="text" maxlength="120" />
+            </div>
+            <div class="field field-compact">
+              <label for="e-subject">วิชา</label>
+              <input id="e-subject" type="text" maxlength="80" />
+            </div>
+            <div class="field field-compact">
+              <label for="e-author">ชื่อผู้จัดทำ</label>
+              <input id="e-author" type="text" maxlength="120" />
+            </div>
+            <div class="field field-compact">
+              <label for="e-classroom">ชั้น/ห้อง/เลขที่</label>
+              <input id="e-classroom" type="text" maxlength="60" />
+            </div>
+            <div class="field field-compact">
+              <label for="e-school">โรงเรียน</label>
+              <input id="e-school" type="text" maxlength="150" />
+            </div>
+            <div class="field field-compact">
+              <label for="e-teacher">ครูผู้สอน</label>
+              <input id="e-teacher" type="text" maxlength="120" />
+            </div>
+          </div>
+
+          <div class="card controls-card">
+            <h2 class="section-title">สี &amp; ตำแหน่ง</h2>
+
+            <div class="color-row">
+              <div class="color-field">
+                <label for="e-primary">สีหลัก</label>
+                <input id="e-primary" type="color" />
+              </div>
+              <div class="color-field">
+                <label for="e-secondary">สีพื้นหลัง</label>
+                <input id="e-secondary" type="color" />
+              </div>
+              <div class="color-field">
+                <label for="e-accent">สีเน้น</label>
+                <input id="e-accent" type="color" />
+              </div>
+            </div>
+
+            <div class="field field-compact">
+              <label for="e-layout">ตำแหน่งข้อความ</label>
+              <select id="e-layout">
+                <option value="top">ด้านบน</option>
+                <option value="center">กึ่งกลาง</option>
+                <option value="bottom">ด้านล่าง</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="editor-toolbar">
+            <button id="regenerate-btn" type="button" class="btn btn-secondary">🔄 สร้างดีไซน์ใหม่</button>
+            <button id="download-png-btn" type="button" class="btn btn-outline">⬇️ ดาวน์โหลด PNG</button>
+            <button id="download-pdf-btn" type="button" class="btn btn-outline">📄 ดาวน์โหลด PDF</button>
+            <button id="back-btn" type="button" class="btn btn-ghost">← กลับไปแก้ไขข้อมูล</button>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <div id="toast-container" class="toast-container" aria-live="assertive"></div>
+
+  <footer class="site-footer">
+    <p>ReportAI Cover · สร้างปกรายงานด้วย AI</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+        </html>
